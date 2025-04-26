@@ -9,7 +9,7 @@ import React from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { User } from "@auth/core/types";
 
-const Sidebar = ({ user }: { user: User }) => {
+const MusicSidebar = ({ user }: { user: User }) => {
   const pathname = usePathname();
 
   return (
@@ -24,7 +24,7 @@ const Sidebar = ({ user }: { user: User }) => {
             height={42}
           />
 
-          <h1>Art Sunday</h1>
+          <h1>Neo Music</h1>
         </div>
 
         <div className="flex flex-col gap-5 mt-10">
@@ -76,4 +76,4 @@ const Sidebar = ({ user }: { user: User }) => {
   );
 };
 
-export default Sidebar;
+export default MusicSidebar;

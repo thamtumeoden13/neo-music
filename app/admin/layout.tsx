@@ -7,7 +7,7 @@ import Header from "@/components/admin/Header";
 import { AUTHOR_BY_ID_QUERY } from "@/sanity/lib/queries";
 
 import "./admin.css";
-import MusicSidebar from "@/components/music-classroom/MusicSidebar";
+import MusicSidebar from "@/components/admin/Sidebar";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
   const session = await auth();

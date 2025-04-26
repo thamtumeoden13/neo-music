@@ -1,23 +1,9 @@
-import Image from "next/image";
-import { Plus, Calendar, ArrowUp, ArrowDown, EyeIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import {  ArrowUp, ArrowDown } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import {
-  CONSTRUCTION_BY_SLUG_QUERY,
-  PROJECT_DETAILS_BY_QUERY,
-  PROJECTS_BY_CONSTRUCTION_ID_QUERY,
-} from "@/sanity/lib/queries";
-import { sanityFetch } from "@/sanity/lib/live";
-import { Author, Project, ProjectDetail } from "@/sanity/types";
-import { formatDate } from "@/lib/utils";
-import { client, clientNoCache } from "@/sanity/lib/client";
+import { client } from "@/sanity/lib/client";
 import { EventInput } from "@fullcalendar/core/index.js";
-import MusicSchedulerCalendar from "@/components/music-classroom/calendar/MusicSchedulerCalendar";
-
-type ProjectDetailFormType = Omit<ProjectDetail, "author" | "project"> & {
-  author?: Author;
-} & { project?: Project };
+import MusicSchedulerCalendar from "@/components/admin/calendar/MusicSchedulerCalendar";
 
 async function getData() {
   const query = `*[_type == "classSession"]{
@@ -51,37 +37,7 @@ async function getData() {
   return events;
 }
 export default async function Dashboard() {
-  const { _id: constructionId } = await clientNoCache.fetch(
-    CONSTRUCTION_BY_SLUG_QUERY,
-    { slug: "thi-cong" }
-  );
-  const { _id: designId } = await clientNoCache.fetch(
-    CONSTRUCTION_BY_SLUG_QUERY,
-    { slug: "thi-cong" }
-  );
-
-  const [searchForConstructions, searchForDesign, searchForProjectDetails] =
-    await Promise.all([
-      sanityFetch({
-        query: PROJECTS_BY_CONSTRUCTION_ID_QUERY,
-        params: { id: constructionId },
-      }),
-      sanityFetch({
-        query: PROJECTS_BY_CONSTRUCTION_ID_QUERY,
-        params: { id: designId },
-      }),
-      sanityFetch({
-        query: PROJECT_DETAILS_BY_QUERY,
-        params: { search: null },
-      }),
-    ]);
-
-  const { data: dataConstructions } = searchForConstructions;
-  const { data: dataDesigns } = searchForDesign;
-  const { data: dataArticles } = searchForProjectDetails;
-
-  console.log("dataArticles", typeof dataArticles);
-
+  
   const initialEvents = await getData();
   return (
     <div className="w-full min-h-screen bg-slate-50">
@@ -96,7 +52,7 @@ export default async function Dashboard() {
                 <span>2</span>
               </div>
             </div>
-            <p className="text-3xl font-bold">{dataConstructions.length}</p>
+            <p className="text-3xl font-bold">{3}</p>
           </CardContent>
         </Card>
 
@@ -109,7 +65,7 @@ export default async function Dashboard() {
                 <span>4</span>
               </div>
             </div>
-            <p className="text-3xl font-bold">{dataDesigns.length}</p>
+            <p className="text-3xl font-bold">{5}</p>
           </CardContent>
         </Card>
 
@@ -122,7 +78,7 @@ export default async function Dashboard() {
                 <span>2</span>
               </div>
             </div>
-            <p className="text-3xl font-bold">{dataArticles.length}</p>
+            <p className="text-3xl font-bold">{20}</p>
           </CardContent>
         </Card>
       </div>
@@ -130,7 +86,7 @@ export default async function Dashboard() {
       {/* Main Content */}
       <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2">
         {/* Articles Requests */}
-        <div>
+        {/* <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-900">
               Bài Viết Chờ Duyệt
@@ -159,10 +115,10 @@ export default async function Dashboard() {
               </p>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
 
         {/* Recently Added Books */}
-        <div>
+        {/* <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-900">
               Các Bài Viết Gần Đây
@@ -219,11 +175,11 @@ export default async function Dashboard() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
       </div>
 
       {/* Articles Top Views */}
-      <div className="mb-8">
+      {/* <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold text-gray-900">
             Bài viết xem nhiều nhất
@@ -270,7 +226,7 @@ export default async function Dashboard() {
                 )}
           </CardContent>
         </Card>
-      </div>
+      </div> */}
 
       {/* User Avatar */}
       <div className="fixed transform -translate-x-1/2 top-6 left-1/2 md:left-auto md:right-16 md:transform-none">

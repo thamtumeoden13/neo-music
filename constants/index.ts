@@ -492,86 +492,33 @@ export const adminSideBarLinks = [
     text: "Tổng Quan",
   },
   {
-    img: "/icons/admin/book.svg",
-    route: "/admin/hang-muc",
-    text: "Hạng Mục",
-  },
-  {
-    img: "/icons/admin/bookmark.svg",
-    route: "/admin/du-an",
-    text: "Dự Án",
-  },
-  {
-    img: "/icons/admin/receipt.svg",
-    route: "/admin/bai-viet",
-    text: "Bài Viết",
-  },
-  {
     img: "/icons/admin/calendar.svg",
-    route: "/admin/danh-muc-trang-chu",
-    text: "Danh Mục Trang Chủ",
-  },
-  {
-    img: "/icons/admin/calendar.svg",
-    route: "/admin/danh-muc-thiet-ke",
-    text: "Danh Mục Thiết Kế",
-  },
-  {
-    img: "/icons/admin/calendar.svg",
-    route: "/admin/danh-muc-thi-cong",
-    text: "Danh Mục Thi Công",
-  },
-  {
-    img: "/icons/admin/calendar.svg",
-    route: "/admin/danh-muc-cuoi-trang",
-    text: "Danh Mục Cuối Trang",
-  },
-  {
-    img: "/icons/admin/calendar.svg",
-    route: "/admin/danh-muc-thong-tin",
-    text: "Danh Mục Thông Tin",
-  },
-  {
-    img: "/icons/admin/user.svg",
-    route: "/admin/quyen-truy-cap",
-    text: "Quyền Truy Cập",
-  },
-];
-
-export const adminMusicSideBarLinks = [
-  {
-    img: "/icons/admin/home.svg",
-    route: "/admin",
-    text: "Tổng Quan",
-  },
-  {
-    img: "/icons/admin/calendar.svg",
-    route: "/music-classroom/phien-hoc",
+    route: "/admin/quan-ly-phien-hoc",
     text: "Quản Lý Phiên Học",
   },
   {
     img: "/icons/admin/book.svg",
-    route: "/music-classroom/khoa-hoc",
+    route: "/admin/quan-ly-khoa-hoc",
     text: "Quản Lý Khóa Học",
   },
   {
     img: "/icons/admin/bookmark.svg",
-    route: "/music-classroom/phong-hoc",
+    route: "/admin/quan-ly-phong-hoc",
     text: "Quản Lý Phòng Học",
   },
   {
     img: "/icons/admin/eye.svg",
-    route: "/music-classroom/ho-so-hoc-vien",
+    route: "/admin/ho-so-hoc-vien",
     text: "Quản Lý Học Viên",
   },
   {
     img: "/icons/admin/receipt.svg",
-    route: "/music-classroom/ho-so-giao-vien",
+    route: "/admin/ho-so-giao-vien",
     text: "Quản Lý Giáo Viên",
   },
   {
     img: "/icons/admin/user.svg",
-    route: "/music-classroom/quyen-truy-cap",
+    route: "/admin/quyen-truy-cap",
     text: "Quyền Truy Cập",
   },
 ];
