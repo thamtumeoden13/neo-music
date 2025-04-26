@@ -6,12 +6,9 @@ export const structure: StructureResolver = (S) =>
     .title('Content')
     .items([
       S.documentTypeListItem("author").title("Authors"),
-      S.documentTypeListItem("startup").title("Startups"),
-      S.documentTypeListItem("playlist").title("Playlists"),
-      S.documentTypeListItem("category").title("Categories"),
-      S.documentTypeListItem("route").title("Routes"),
-      S.documentTypeListItem("construction").title("Constructions"),
-      S.documentTypeListItem("design").title("Designs"),
-      S.documentTypeListItem("project").title("Projects"),
-      S.documentTypeListItem("projectDetail").title("ProjectDetails"),
+      S.documentTypeListItem("classSession").title("ClassSessions"),
+      S.documentTypeListItem("course").title("Courses"),
+      S.documentTypeListItem("room").title("Rooms"),
+      S.documentTypeListItem("student").title("Students"),
+      S.documentTypeListItem("teacher").title("Teachers"),
     ]);

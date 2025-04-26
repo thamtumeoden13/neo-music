@@ -3,11 +3,11 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { clientNoCache } from "@/sanity/lib/client";
 
-import Sidebar from "@/components/admin/Sidebar";
 import Header from "@/components/admin/Header";
 import { AUTHOR_BY_ID_QUERY } from "@/sanity/lib/queries";
 
 import "./admin.css";
+import MusicSidebar from "@/components/music-classroom/MusicSidebar";
 
 const Layout = async ({ children }: { children: ReactNode }) => {
   const session = await auth();
@@ -22,7 +22,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <main className="flex flex-row w-full min-h-screen">
-      <Sidebar user={user} />
+      <MusicSidebar user={user} />
 
       <div className="admin-container">
         <Header user={user} />

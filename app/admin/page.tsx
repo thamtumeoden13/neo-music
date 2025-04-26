@@ -11,12 +11,45 @@ import {
 import { sanityFetch } from "@/sanity/lib/live";
 import { Author, Project, ProjectDetail } from "@/sanity/types";
 import { formatDate } from "@/lib/utils";
-import { clientNoCache } from "@/sanity/lib/client";
+import { client, clientNoCache } from "@/sanity/lib/client";
+import { EventInput } from "@fullcalendar/core/index.js";
+import MusicSchedulerCalendar from "@/components/music-classroom/calendar/MusicSchedulerCalendar";
 
 type ProjectDetailFormType = Omit<ProjectDetail, "author" | "project"> & {
   author?: Author;
 } & { project?: Project };
 
+async function getData() {
+  const query = `*[_type == "classSession"]{
+    _id,
+    title,
+    startDateTime,
+    endDateTime,
+    "teacherName": teacher->name,
+    "roomName": room->name,
+    "teacherColor": teacher->color
+  }`;
+  const sessions = await client.fetch(query);
+
+  // Chuyển đổi sang định dạng FullCalendar EventInput
+  const events: EventInput[] = sessions.map((session: any) => ({
+    id: session._id, // Dùng _id của Sanity làm id event
+    title: session.title || "Unnamed Class",
+    start: session.startDateTime, // Sanity datetime string -> FullCalendar sẽ parse
+    end: session.endDateTime,
+    // Sử dụng extendedProps để lưu trữ dữ liệu tùy chỉnh
+    extendedProps: {
+      sanityId: session._id,
+      teacherName: session.teacherName,
+      roomName: session.roomName,
+      // ... các thông tin khác bạn muốn truy cập khi click event
+    },
+    // Tùy chỉnh màu sắc dựa trên giáo viên hoặc trạng thái
+    backgroundColor: session.teacherColor || "#3788d8", // Màu mặc định nếu GV không có màu
+    borderColor: session.teacherColor || "#3788d8",
+  }));
+  return events;
+}
 export default async function Dashboard() {
   const { _id: constructionId } = await clientNoCache.fetch(
     CONSTRUCTION_BY_SLUG_QUERY,
@@ -49,6 +82,7 @@ export default async function Dashboard() {
 
   console.log("dataArticles", typeof dataArticles);
 
+  const initialEvents = await getData();
   return (
     <div className="w-full min-h-screen bg-slate-50">
       {/* Stats Cards */}
@@ -245,6 +279,8 @@ export default async function Dashboard() {
           <AvatarFallback>V</AvatarFallback>
         </Avatar>
       </div>
+
+      <MusicSchedulerCalendar initialEvents={initialEvents} />
     </div>
   );
 }

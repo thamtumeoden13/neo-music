@@ -133,7 +133,6 @@ export const CONSTRUCTION_BY_SLUG_QUERY =
   orderIndex,
 }`);
 
-
 export const DESIGNS_BY_QUERY =
   defineQuery(`*[_type == "design" && !defined($search) || title match $search || author->name match $search] | order(_createdAt desc) {
   _id, 
@@ -524,14 +523,12 @@ export const PROJECT_DETAILS_BY_TAG =
   published,
 }`);
 
-
 export const PROJECT_DETAIL_VIEWS_QUERY = defineQuery(`
   *[_type == "projectDetail" && _id == $id][0]{
     _id,
     views
     }
   `);
-
 
 export const CATEGORY_BY_SLUG_QUERY =
   defineQuery(`*[_type == "category" && slug.current == $slug][0]{
