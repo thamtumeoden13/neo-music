@@ -16,9 +16,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Badge } from "@/components/ui/badge";
-import { Construction } from "@/sanity/types";
 
-export type MultiSelectOption = Pick<Construction, "title" | "_id" | "slug">
+export type MultiSelectOption = {
+  title: string;
+  value: string;
+}
 
 export type MultiSelectProps = {
   options: MultiSelectOption[];
@@ -45,7 +47,7 @@ function MultiSelect({
     if (selected.length === options.length) {
       onChange([]); // Unselect all if all options are selected
     } else {
-      onChange(options.map((option) => option._id)); // Select all if not all options are selected
+      onChange(options.map((option) => option.value)); // Select all if not all options are selected
     }
   };
 
@@ -69,7 +71,7 @@ function MultiSelect({
                   className="p-2 mb-1 mr-1 text-white bg-primary hover:bg-primary/90 "
                   onClick={() => handleUnselect(item)}
                 >
-                  {options.find((option) => item === option._id)?.title}
+                  {options.find((option) => item === option.value)?.title}
                   <button
                     type="button"
                     className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
@@ -114,12 +116,12 @@ function MultiSelect({
             </CommandItem>
             {options.map((option) => (
               <CommandItem
-                key={option._id}
+                key={option.value}
                 onSelect={() => {
                   onChange(
-                    selected.includes(option._id)
-                      ? selected.filter((item) => item !== option._id)
-                      : [...selected, option._id]
+                    selected.includes(option.value)
+                      ? selected.filter((item) => item !== option.value)
+                      : [...selected, option.value]
                   );
                   setOpen(true);
                 }}
@@ -128,7 +130,7 @@ function MultiSelect({
                 <Check
                   className={cn(
                     "mr-2 h-4 w-4",
-                    selected.includes(option._id) ? "opacity-100" : "opacity-0"
+                    selected.includes(option.value) ? "opacity-100" : "opacity-0"
                   )}
                 />
                 {option.title}

@@ -5,27 +5,23 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { EditIcon, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { Author, Construction } from "@/sanity/types";
+import { Student } from "@/sanity/types";
 import { DenyAccountDialog } from "@/components/ui/confirmation-dialogs";
 import { clientNoCache } from "@/sanity/lib/client";
-import { CONSTRUCTIONS_BY_QUERY } from "@/sanity/lib/queries";
+import { STUDENTS_BY_QUERY } from "@/sanity/lib/queries";
 import { deleteById } from "@/lib/actions";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import TableComponent, {
   DataProps,
 } from "@/components/admin/table/TableComponent";
-import { columns } from "@/components/admin/constructions/column";
 import Link from "next/link";
+import { columns } from "@/components/admin/students/column";
 
-type ConstructionProps = Omit<Construction, "author" | "construction"> & {
-  author?: Author;
-};
-
-export default function UsersTable() {
+export default function StudentsTable() {
   const router = useRouter();
 
-  const [requests, setRequests] = useState<ConstructionProps[]>([]);
+  const [students, setStudents] = useState<Student[]>([]);
 
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState<string | null>(
@@ -42,6 +38,7 @@ export default function UsersTable() {
     if (selectedRequestId) {
       const { error, status } = await deleteById(selectedRequestId);
       if (status === "ERROR") {
+        console.error("ProjectTable -> handleDelete", error);
         toast({
           title: "Error",
           description: error,
@@ -55,29 +52,30 @@ export default function UsersTable() {
         description: "Your item has been deleted successfully",
       });
 
-      getProducts();
+      getStudents();
     }
   };
 
   const handleEdit = async (request: DataProps) => {
     console.log("TableComponent -> path", request);
-    router.push(`/admin/hang-muc/${request.slug?.current}`);
+    router.push(`/admin/ho-so-hoc-vien/${request._id}`);
   };
 
-  const getProducts = async () => {
+  const getStudents = async () => {
     const params = { search: null };
-    const searchForProducts = await clientNoCache.fetch(
-      CONSTRUCTIONS_BY_QUERY,
+    const searchForProjects = await clientNoCache.fetch(
+      STUDENTS_BY_QUERY,
       params
     );
-    setRequests(searchForProducts);
+    console.log("getStudents -> searchForProjects", searchForProjects);
+    setStudents(searchForProjects);
   };
 
   useEffect(() => {
-    getProducts();
+    getStudents();
   }, []);
 
-  const _columns: ColumnDef<ConstructionProps>[] = [
+  const _columns: ColumnDef<Student>[] = [
     ...columns,
     {
       id: "actions",
@@ -113,21 +111,21 @@ export default function UsersTable() {
     <>
       <section className="w-full bg-white rounded-2xl p-7">
         <div className="flex items-center justify-end px-6">
-            <Button
-              className="bg-indigo-600 hover:bg-indigo-700 text-white"
-              asChild
-            >
-              <Link href="/admin/hang-muc/new">
-                <span className="flex items-center">
-                  <span className="mr-1">+</span> Tạo hang mục mới
-                </span>
-              </Link>
-            </Button>
+          <Button
+            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            asChild
+          >
+            <Link href="/admin/ho-so-hoc-vien/new">
+              <span className="flex items-center">
+                <span className="mr-1">+</span> Tạo học viên mới
+              </span>
+            </Link>
+          </Button>
         </div>
         <TableComponent
-          data={requests}
+          data={students}
           columns={_columns as ColumnDef<DataProps>[]}
-          title="Danh sách hạng mục"
+          title="Danh sách học viên"
           // openApproveDialog={openApproveDialog}
           // openDenyDialog={openDenyDialog}
           openDeleteDialog={openDeleteDialog}

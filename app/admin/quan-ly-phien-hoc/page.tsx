@@ -1,20 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Author, Project, ProjectDetail } from "@/sanity/types";
+import { ClassSession, Course, Room, Student, Teacher } from "@/sanity/types";
 import {
   ApproveAccountDialog,
   DenyAccountDialog,
 } from "@/components/ui/confirmation-dialogs";
 import { clientNoCache } from "@/sanity/lib/client";
-import { ALL_ARTICLES_BY_QUERY } from "@/sanity/lib/queries";
+import { CLASS_SESSIONS_BY_QUERY } from "@/sanity/lib/queries";
 import { deleteById, publishedProjectDetail } from "@/lib/actions";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import TableComponent, {
   DataProps,
 } from "@/components/admin/table/TableComponent";
-import { columns } from "@/components/admin/articles/column";
+import { columns } from "@/components/admin/classSessions/column";
 
 import { type ColumnDef } from "@tanstack/react-table";
 import {
@@ -27,15 +27,19 @@ import {
 import { ArrowUpDown, Check, EditIcon, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { classSessionList } from "@/constants";
 
-type Article = Omit<ProjectDetail, "author" | "project"> & {
-  author?: Author;
-} & { project?: Project } & { published?: "pending" | "approved" | "rejected" };
+type ClassSessionProps = Omit<
+  ClassSession,
+  "course" | "teacher" | "room" | "students"
+> & { course?: Course } & { room?: Room } & { teacher?: Teacher } & {
+  students?: Student[];
+};
 
-export default function UsersTable() {
+export default function ClassSessionsTable() {
   const router = useRouter();
 
-  const [requests, setRequests] = useState<Article[]>([]);
+  const [classSessions, setClassSessions] = useState<ClassSessionProps[]>([]);
 
   const [denyDialogOpen, setDenyDialogOpen] = useState(false);
   const [approveDialogOpen, setApproveDialogOpen] = useState(false);
@@ -83,7 +87,7 @@ export default function UsersTable() {
         // variant: "destructive",
       });
 
-      getArticles();
+      getClassSessions();
     }
   };
 
@@ -111,7 +115,7 @@ export default function UsersTable() {
         // variant: "destructive",
       });
 
-      getArticles();
+      getClassSessions();
     }
   };
 
@@ -135,41 +139,44 @@ export default function UsersTable() {
         description: "Your item has been deleted successfully",
       });
 
-      getArticles();
+      getClassSessions();
     }
   };
 
   const handleEdit = async (request: DataProps) => {
     console.log("TableComponent -> path", request);
-    router.push(`/admin/bai-viet/${request.slug?.current}`);
+    router.push(`/admin/quan-ly-phien-hoc/${request._id}`);
   };
 
-  const getArticles = async () => {
+  const getClassSessions = async () => {
     const params = { search: null };
     const searchForProjects = await clientNoCache.fetch(
-      ALL_ARTICLES_BY_QUERY,
+      CLASS_SESSIONS_BY_QUERY,
       params
     );
-    setRequests(searchForProjects);
-    console.log("getArticles -> searchForProjects", searchForProjects.length);
+    setClassSessions(searchForProjects);
+    console.log(
+      "getClassSessions -> searchForProjects",
+      searchForProjects
+    );
   };
 
   useEffect(() => {
-    getArticles();
+    getClassSessions();
   }, []);
 
   const handlePublishedChange = (
-    request: Article,
-    newStatus: "approved" | "pending" | "rejected"
+    request: ClassSessionProps,
+    newStatus: "scheduled" | "ongoing" | "completed" | "cancelled"
   ) => {
-    if (newStatus === "approved") {
-      openApproveDialog(request);
-    } else if (newStatus === "rejected") {
+    if (newStatus === "cancelled") {
       openDenyDialog(request);
+    } else {
+      openApproveDialog(request);
     }
   };
 
-  const _columns: ColumnDef<Article>[] = [
+  const _columns: ColumnDef<ClassSessionProps>[] = [
     ...columns,
     {
       accessorKey: "published",
@@ -183,7 +190,7 @@ export default function UsersTable() {
               }
               className="p-0 hover:bg-transparent"
             >
-              <span>Xuất bản</span>
+              <span>Trạng thái</span>
               <ArrowUpDown className="ml-2 h-4 w-4" />
             </Button>
           </div>
@@ -191,61 +198,46 @@ export default function UsersTable() {
       },
       cell: ({ row }) => {
         const request = row.original;
-        const roleColor =
-          request.published === "approved"
-            ? "text-green-500"
-            : request.published === "rejected"
-              ? "text-pink-500"
-              : "text-gray-500";
-
         return (
           <div className="w-20">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className={`px-4 py-1 h-auto font-medium ${roleColor}`}
+                  className={`px-4 py-1 h-auto font-medium`}
                 >
-                  {request.published}
+                  {request.status}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
                 <DropdownMenuRadioGroup
-                  value={request.published}
+                  value={request.status}
                   onValueChange={(value: string) =>
                     handlePublishedChange(
                       request,
-                      value as "approved" | "pending" | "rejected"
+                      value as
+                        | "scheduled"
+                        | "ongoing"
+                        | "completed"
+                        | "cancelled"
                     )
                   }
                 >
-                  <DropdownMenuRadioItem
-                    value="pending"
-                    className="text-gray-500"
-                  >
-                    Pending
-                    {request.published === "pending" && (
-                      <Check className="w-4 h-4 ml-auto" />
-                    )}
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem
-                    value="approved"
-                    className="text-green-500"
-                  >
-                    Approved
-                    {request.published === "approved" && (
-                      <Check className="w-4 h-4 ml-auto" />
-                    )}
-                  </DropdownMenuRadioItem>
-                  <DropdownMenuRadioItem
-                    value="rejected"
-                    className="text-red-500"
-                  >
-                    Rejected
-                    {request.published === "rejected" && (
-                      <Check className="w-4 h-4 ml-auto" />
-                    )}
-                  </DropdownMenuRadioItem>
+                  {classSessionList.map((item) => (
+                    <DropdownMenuRadioItem
+                      value={item.value}
+                      className="text-gray-500"
+                      key={item.value}
+                      onClick={() => {
+                        setSelectedRequestId(item.value);
+                      }}
+                    >
+                      {item.title}
+                      {request.status === item.value && (
+                        <Check className="w-4 h-4 ml-auto" />
+                      )}
+                    </DropdownMenuRadioItem>
+                  ))}
                 </DropdownMenuRadioGroup>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -287,23 +279,21 @@ export default function UsersTable() {
     <>
       <section className="w-full bg-white rounded-2xl p-7">
         <div className="flex items-center justify-end px-6">
-            <Button
-              className="bg-indigo-600 hover:bg-indigo-700 text-white"
-              asChild
-            >
-              <Link href="/admin/bai-viet/new">
-                <span className="flex items-center">
-                  <span className="mr-1">+</span> Tạo bài viết mới
-                </span>
-              </Link>
-            </Button>
+          <Button
+            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            asChild
+          >
+            <Link href="/admin/quan-ly-phien-hoc/new">
+              <span className="flex items-center">
+                <span className="mr-1">+</span> Tạo phiên học mới
+              </span>
+            </Link>
+          </Button>
         </div>
         <TableComponent
-          data={requests}
+          data={classSessions}
           columns={_columns as ColumnDef<DataProps>[]}
           title="Danh sách bài viết"
-          addButton="Tạo bài viết mới"
-          addButtonLink="/admin/bai-viet/new"
           openApproveDialog={openApproveDialog}
           openDenyDialog={openDenyDialog}
           openDeleteDialog={openDeleteDialog}

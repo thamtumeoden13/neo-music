@@ -522,3 +522,47 @@ export const adminSideBarLinks = [
     text: "Quyền Truy Cập",
   },
 ];
+
+export const courseLevelList = [
+  { title: "Vỡ lòng", value: "beginner" },
+  { title: "Cơ bản", value: "basic" },
+  { title: "Trung cấp", value: "intermediate" },
+  { title: "Nâng cao", value: "advanced" },
+];
+
+export const courseTypeList = [
+  { title: "Lý thuyết", value: "theory" },
+  { title: "Thực hành", value: "practice" },
+  { title: "Thực hành và lý thuyết", value: "theory-practice" },
+];
+
+export const courseStatusList = [
+  { title: "Đang diễn ra", value: "ongoing" },
+  { title: "Đã hoàn thành", value: "completed" },
+  { title: "Đã hủy", value: "cancelled" },
+  { title: "Chưa bắt đầu", value: "not-started" },
+];
+
+export const displayColor = [
+  { title: "Đỏ", value: "#f87171" },
+  { title: "Cam", value: "#fb923c" },
+  { title: "Vàng", value: "#facc15" },
+  { title: "Xanh lá", value: "#4ade80" },
+  { title: "Xanh dương", value: "#60a5fa" },
+  { title: "Tím", value: "#a78bfa" },
+  { title: "Hồng", value: "#f472b6" },
+];
+
+export const classSessionList = [
+  { title: "Đã lên lịch", value: "scheduled" },
+  { title: "Đang diễn ra", value: "ongoing" },
+  { title: "Đã hoàn thành", value: "completed" },
+  { title: "Đã hủy", value: "cancelled" },
+];
+
+export const frequencyList = [
+  { title: "Hàng ngày", value: "daily" },
+  { title: "Hàng tuần", value: "weekly" },
+  { title: "Hàng tháng", value: "monthly" },
+  { title: "Hàng năm", value: "yearly" },
+];

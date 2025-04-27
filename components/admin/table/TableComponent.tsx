@@ -37,8 +37,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArticleProps } from "../articles/column";
-import { ProjectProps } from "../projects/column";
+import { ArticleProps } from "../classSessions/column";
+import { ProjectProps } from "../courses/column";
 import { ConstructionProps } from "../constructions/column";
 import { AuthorProps } from "../users/column";
 import { Input } from "@/components/ui/input";

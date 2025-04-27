@@ -1,3 +1,4 @@
+import exp from "constants";
 import { defineQuery } from "next-sanity";
 
 export const AUTHORS_BY_QUERY =
@@ -639,4 +640,144 @@ export const ROUTE_BY_ID_QUERY =
       _id, title, subtitle, description, image, thumbnail, slug
     }, 
   }
+}`);
+
+export const COURSES_BY_QUERY =
+  defineQuery(`*[_type == "course" && !defined($search) || title match $search ] | order(orderIndex asc, _createdAt desc) {
+  _id, 
+  title, 
+  level,
+  description,
+  _createdAt,
+  _updatedAt,
+}`);
+
+export const COURSE_BY_ID_QUERY =
+  defineQuery(`*[_type == "course" && _id == $id][0]{
+  _id, 
+  title,
+  level,
+  description,
+  _createdAt,
+  _updatedAt,
+}`);
+
+export const ROOMS_BY_QUERY =
+  defineQuery(`*[_type == "room" && !defined($search) || name match $search ] | order(orderIndex asc, _createdAt desc) {
+  _id,
+  name,
+  capacity,
+  description,
+  _createdAt,
+  _updatedAt,
+}`);
+
+export const ROOM_BY_ID_QUERY =
+  defineQuery(`*[_type == "room" && _id == $id][0]{
+  _id,
+  name,
+  capacity,
+  description,
+  _createdAt,
+  _updatedAt,
+}`);
+
+export const STUDENTS_BY_QUERY =
+  defineQuery(`*[_type == "student" && !defined($search) || name match $search ] | order(orderIndex asc, _createdAt desc) {
+  _id,
+  name,
+  contact,
+  dob,
+  parentName,
+  parentContact,
+  notes,
+  _createdAt,
+  _updatedAt,
+}`);
+
+export const STUDENT_BY_ID_QUERY =
+  defineQuery(`*[_type == "student" && _id == $id][0]{
+  _id,
+  name,
+  contact,
+  dob,
+  parentName,
+  parentContact,
+  notes,
+  _createdAt,
+  _updatedAt,
+}`);
+
+export const TEACHERS_BY_QUERY =
+  defineQuery(`*[_type == "teacher" && !defined($search) || name match $search ] | order(orderIndex asc, _createdAt desc) {
+  _id,
+  name,
+  contact,
+  specialty,
+  avatar,
+  color,
+  _createdAt,
+  _updatedAt,
+}`);
+
+export const TEACHER_BY_ID_QUERY =
+  defineQuery(`*[_type == "teacher" && _id == $id][0]{
+  _id,
+  name,
+  contact,
+  specialty,
+  avatar,
+  color,
+  _createdAt,
+  _updatedAt,
+}`);
+
+export const CLASS_SESSIONS_BY_QUERY =
+  defineQuery(`*[_type == "classSession" && !defined($search) || title match $search ] | order(orderIndex asc, _createdAt desc) {
+  _id,
+  title,
+  startDateTime,
+  endDateTime,
+  course->{
+    _id, title
+  },
+  teacher->{
+    _id, name
+  },
+  room->{
+    _id, name
+  },
+  students[]->{
+    _id, name
+  },
+  status,
+  maxStudents,
+  recurringRule,
+  _createdAt,
+  _updatedAt,
+}`);
+
+export const CLASS_SESSION_BY_ID_QUERY =
+  defineQuery(`*[_type == "classSession" && _id == $id][0]{
+  _id,
+  title,
+  startDateTime,
+  endDateTime,
+  course->{
+    _id, title
+  },
+  teacher->{
+    _id, name
+  },
+  room->{
+    _id, name
+  },
+  students[]->{
+    _id, name
+  },
+  status,
+  maxStudents,
+  recurringRule,
+  _createdAt,
+  _updatedAt,
 }`);

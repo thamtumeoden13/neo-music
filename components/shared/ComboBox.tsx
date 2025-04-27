@@ -18,9 +18,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { Construction } from "@/sanity/types"
 
-export type ComboboxDataType = Pick<Construction, "title" | "_id" | "slug">
+export type ComboboxDataType = {
+  title: string;
+  value: string;
+}
 
 export function Combobox({
   initValue,
@@ -43,7 +45,7 @@ export function Combobox({
         onChange(null)
         return;
       }
-      const selected = data.find((item) => item._id === value)
+      const selected = data.find((item) => item.value === value)
       onChange(selected!)
     }
   }, [value])
@@ -64,7 +66,7 @@ export function Combobox({
           className={cn("flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm", className)}
         >
           {value
-            ? data.find((item) => item._id === value)?.title
+            ? data.find((item) => item.value === value)?.title
             : "Vui lòng chọn..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
@@ -77,8 +79,8 @@ export function Combobox({
             <CommandGroup>
               {data.map((item) => (
                 <CommandItem
-                  key={item._id}
-                  value={item._id}
+                  key={item.value}
+                  value={item.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? "" : currentValue)
                     setOpen(false)
@@ -88,7 +90,7 @@ export function Combobox({
                   <Check
                     className={cn(
                       "mr-2 h-4 w-4",
-                      value === item._id ? "opacity-100" : "opacity-0"
+                      value === item.value ? "opacity-100" : "opacity-0"
                     )}
                   />
                   {item.title}
