@@ -554,10 +554,10 @@ export const displayColor = [
 ];
 
 export const classSessionList = [
-  { title: "Đã lên lịch", value: "scheduled" },
-  { title: "Đang diễn ra", value: "ongoing" },
-  { title: "Đã hoàn thành", value: "completed" },
-  { title: "Đã hủy", value: "cancelled" },
+  { title: "Đã lên lịch", value: "scheduled", color: "text-gray-500",bgColor: "bg-gray-100"  },
+  { title: "Đang diễn ra", value: "ongoing", color: "text-yellow-500",bgColor: "bg-yellow-100"  },
+  { title: "Đã hoàn thành", value: "completed", color: "text-green-500",bgColor: "bg-green-100"  },
+  { title: "Đã hủy", value: "cancelled", color: "text-red-500",bgColor: "bg-red-100"  },
 ];
 
 export const frequencyList = [

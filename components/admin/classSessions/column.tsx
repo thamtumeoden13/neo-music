@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import dayjs from 'dayjs';
 
 type ClassSessionProps = Omit<
   ClassSession,
@@ -62,10 +63,10 @@ export const columns: ColumnDef<ClassSessionProps>[] = [
     cell: ({ row }) => {
       const request = row.original;
       return (
-        <div className="flex items-center gap-3 max-w-80">
+        <div className="flex items-center justify-center gap-3 max-w-80">
           <div className="flex flex-col">
             <span className=" text-left font-medium line-clamp-1">
-              {request.startDateTime}
+              {dayjs(request.startDateTime).format('YYYY/MM/DD HH:mm A')}
             </span>
           </div>
         </div>
@@ -91,10 +92,10 @@ export const columns: ColumnDef<ClassSessionProps>[] = [
     cell: ({ row }) => {
       const request = row.original;
       return (
-        <div className="flex items-center gap-3 max-w-80">
+        <div className="flex items-center justify-center gap-3 max-w-80">
           <div className="flex flex-col">
             <span className=" text-left font-medium line-clamp-1">
-              {request.endDateTime}
+              {dayjs(request.endDateTime).format('YYYY/MM/DD HH:mm A')}
             </span>
           </div>
         </div>

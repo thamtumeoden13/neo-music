@@ -84,7 +84,7 @@ export default function MusicSchedulerCalendar({ initialEvents }: MusicScheduler
       />
 
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="sm:max-w-[425px] md:max-w-[600px]">
+        <DialogContent className="sm:max-w-[425px] md:max-w-[600px] bg-white-100">
           <DialogHeader>
             <DialogTitle>
               {selectedEvent

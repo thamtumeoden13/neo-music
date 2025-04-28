@@ -780,4 +780,5 @@ export const CLASS_SESSION_BY_ID_QUERY =
   recurringRule,
   _createdAt,
   _updatedAt,
+  notes,
 }`);

@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/confirmation-dialogs";
 import { clientNoCache } from "@/sanity/lib/client";
 import { CLASS_SESSIONS_BY_QUERY } from "@/sanity/lib/queries";
-import { deleteById, publishedProjectDetail } from "@/lib/actions";
+import { deleteById, publishedClassSession } from "@/lib/actions";
 import { toast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import TableComponent, {
@@ -28,6 +28,7 @@ import { ArrowUpDown, Check, EditIcon, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { classSessionList } from "@/constants";
+import { cn } from "@/lib/utils";
 
 type ClassSessionProps = Omit<
   ClassSession,
@@ -45,6 +46,9 @@ export default function ClassSessionsTable() {
   const [approveDialogOpen, setApproveDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedRequestId, setSelectedRequestId] = useState<string | null>(
+    null
+  );
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(
     null
   );
 
@@ -67,9 +71,9 @@ export default function ClassSessionsTable() {
     setApproveDialogOpen(false);
     setSelectedRequestId(null);
     if (selectedRequestId) {
-      const { error, status } = await publishedProjectDetail(
+      const { error, status } = await publishedClassSession(
         selectedRequestId,
-        "approved"
+        selectedStatus as string
       );
 
       if (status === "ERROR") {
@@ -95,9 +99,9 @@ export default function ClassSessionsTable() {
     setDenyDialogOpen(false);
     setSelectedRequestId(null);
     if (selectedRequestId) {
-      const { error, status } = await publishedProjectDetail(
+      const { error, status } = await publishedClassSession(
         selectedRequestId,
-        "rejected"
+        selectedStatus as string
       );
 
       if (status === "ERROR") {
@@ -155,10 +159,7 @@ export default function ClassSessionsTable() {
       params
     );
     setClassSessions(searchForProjects);
-    console.log(
-      "getClassSessions -> searchForProjects",
-      searchForProjects
-    );
+    console.log("getClassSessions -> searchForProjects", searchForProjects);
   };
 
   useEffect(() => {
@@ -169,6 +170,7 @@ export default function ClassSessionsTable() {
     request: ClassSessionProps,
     newStatus: "scheduled" | "ongoing" | "completed" | "cancelled"
   ) => {
+    setSelectedStatus(newStatus);
     if (newStatus === "cancelled") {
       openDenyDialog(request);
     } else {
@@ -198,15 +200,25 @@ export default function ClassSessionsTable() {
       },
       cell: ({ row }) => {
         const request = row.original;
+        const roleColor = classSessionList.find(
+          (item) => item.value === request.status
+        );
+        const title = classSessionList.find(
+          (item) => item.value === request.status
+        );
+        console.log("roleColor", roleColor?.color);
         return (
           <div className="w-20">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="outline"
-                  className={`px-4 py-1 h-auto font-medium`}
+                  className={cn(
+                    "px-4 py-1 h-auto font-medium",
+                    roleColor?.bgColor
+                  )}
                 >
-                  {request.status}
+                  {title?.title}
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
@@ -226,7 +238,7 @@ export default function ClassSessionsTable() {
                   {classSessionList.map((item) => (
                     <DropdownMenuRadioItem
                       value={item.value}
-                      className="text-gray-500"
+                      className={`${item.color}`}
                       key={item.value}
                       onClick={() => {
                         setSelectedRequestId(item.value);

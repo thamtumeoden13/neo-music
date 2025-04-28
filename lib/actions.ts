@@ -7,6 +7,7 @@ import { writeClient } from "@/sanity/lib/write-client";
 import { client, clientNoCache } from "@/sanity/lib/client";
 import {
   CATEGORY_BY_ID_QUERY,
+  CLASS_SESSION_BY_ID_QUERY,
   CONSTRUCTION_BY_SLUG_QUERY,
   DESIGN_BY_SLUG_QUERY,
   PROJECT_BY_SLUG_QUERY,
@@ -1450,6 +1451,45 @@ export const updateClassSession = async (
   } catch (error) {
     console.log(error);
 
+    return parseServerActionResponse({
+      error: JSON.stringify(error),
+      status: "ERROR",
+    });
+  }
+};
+
+export const publishedClassSession = async (
+  classSessionId: string,
+  status: string
+): Promise<ReturnType<typeof parseServerActionResponse>> => {
+  const session = await auth();
+
+  if (!session)
+    return parseServerActionResponse({
+      error: "Not signed in",
+      status: "ERROR",
+    });
+
+  const resultQuery = await clientNoCache.fetch(CLASS_SESSION_BY_ID_QUERY, {
+    id: classSessionId,
+  });
+
+  try {
+    const classSessionData = {
+      ...resultQuery,
+      status,
+    };
+    const result = await writeClient
+      .patch(classSessionId)
+      .set({ ...classSessionData })
+      .commit();
+
+    return parseServerActionResponse({
+      result,
+      error: "",
+      status: "SUCCESS",
+    });
+  } catch (error) {
     return parseServerActionResponse({
       error: JSON.stringify(error),
       status: "ERROR",

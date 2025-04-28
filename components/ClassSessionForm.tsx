@@ -91,6 +91,7 @@ const ClassSessionForm = ({
     formData: FormData
   ) => {
     try {
+      console.log("post -> selected", selected);
       const formValues: ClassSessionFormValues = {
         title: formData.get("title") as string,
         maxStudents: Number(formData.get("maxStudents")) as number,
@@ -177,10 +178,13 @@ const ClassSessionForm = ({
     key: keyof SelectedProps,
     value: ComboboxDataType | null
   ) => {
-    setSelected({
-      ...selected,
-      [key]: value,
-    });
+    console.log("handleSelected", { key, value });
+    if (value) {
+      setSelected({
+        ...selected,
+        [key]: value,
+      });
+    }
   };
   const handleDateRangeChange = (range: DateTimeRange) => {
     setSelectedRange(range);
@@ -238,7 +242,10 @@ const ClassSessionForm = ({
         teacher,
         room,
         students,
+        notes,
       } = classSession;
+
+      console.log("post -> classSession", classSession);
 
       const _formData = {
         ...formData!,
@@ -247,6 +254,7 @@ const ClassSessionForm = ({
         endDateTime,
         maxStudents,
         status,
+        notes,
       };
 
       console.log("post -> _formData", _formData);
@@ -260,6 +268,22 @@ const ClassSessionForm = ({
         teacher: teacher?._id,
         room: room?._id,
       });
+      const statusSelected = classSessionList.find(
+        (item) => item.value === status
+      );
+
+      const selected = {
+        status: statusSelected,
+        course: course?._id
+          ? { title: course.title!, value: course._id! }
+          : null,
+        teacher: teacher?._id
+          ? { title: teacher.name!, value: teacher._id! }
+          : null,
+        room: room?._id ? { title: room.name!, value: room._id! } : null,
+      };
+      console.log("post -> selected", selected);
+      setSelected(selected);
     }
   }, [classSession]);
 

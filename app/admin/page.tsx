@@ -46,7 +46,7 @@ export default async function Dashboard() {
         <Card className="bg-white">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-medium text-gray-600">Hạng mục Thi công</h3>
+              <h3 className="font-medium text-gray-600">Tổng số học viên</h3>
               <div className="flex items-center text-amber-500">
                 <ArrowDown className="w-4 h-4 mr-1" />
                 <span>2</span>
@@ -59,7 +59,7 @@ export default async function Dashboard() {
         <Card className="bg-white">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-medium text-gray-600">Hạng mục Thiết kế</h3>
+              <h3 className="font-medium text-gray-600">Tổng số lớp học</h3>
               <div className="flex items-center text-green-500">
                 <ArrowUp className="w-4 h-4 mr-1" />
                 <span>4</span>
@@ -72,10 +72,10 @@ export default async function Dashboard() {
         <Card className="bg-white">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-medium text-gray-600">Tổng Bài Viết</h3>
+              <h3 className="font-medium text-gray-600">Tổng số phiên học</h3>
               <div className="flex items-center text-green-500">
                 <ArrowUp className="w-4 h-4 mr-1" />
-                <span>2</span>
+                <span>4</span>
               </div>
             </div>
             <p className="text-3xl font-bold">{20}</p>
