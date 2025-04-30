@@ -25,6 +25,7 @@ import {
   DatePickerWithRange,
   DateTimeRange,
 } from "./shared/DatePickerWithRange";
+import { DateSelectArg } from "@fullcalendar/core/index.js";
 
 type initValueProps = {
   course?: string;
@@ -32,6 +33,7 @@ type initValueProps = {
   teacher?: string;
   status?: string;
   students?: string[];
+  range?: DateTimeRange;
 };
 
 type SelectedProps = {
@@ -59,8 +61,10 @@ export type ClassSessionFormValues = Pick<
 
 const ClassSessionForm = ({
   classSession,
+  selectedDateRange,
 }: {
   classSession?: ClassSessionFormType;
+  selectedDateRange?: DateSelectArg | null;
 }) => {
   const { toast } = useToast();
   const router = useRouter();
@@ -287,8 +291,22 @@ const ClassSessionForm = ({
     }
   }, [classSession]);
 
-  console.log("post -> formData", formData);
-  console.log("post -> initValue", initValue);
+  useEffect(() => {
+    if (selectedDateRange) {
+      setSelectedRange({
+        from: selectedDateRange.start,
+        to: selectedDateRange.end,
+      });
+      setInitValue({
+        ...initValue,
+        range: {
+          from: new Date(selectedDateRange.startStr),
+          to:  new Date(selectedDateRange.endStr),
+        },
+      });
+    }
+  }
+  , [selectedDateRange]);
 
   return (
     <form action={formAction} className={"startup-form"}>
@@ -347,7 +365,7 @@ const ClassSessionForm = ({
         <label htmlFor="maxStudents" className={"startup-form_label "}>
           {"Thời gian bắt đầu - Thời gian kết thúc"}
         </label>
-        <DatePickerWithRange onChange={handleDateRangeChange} />
+        <DatePickerWithRange initalValue={initValue.range} onChange={handleDateRangeChange} />
         {/* {errors.maxStudents && (
           <p className={"startup-form_error"}>{errors.maxStudents}</p>
         )} */}

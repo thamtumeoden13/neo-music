@@ -22,7 +22,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
         <div className="auth-box">
           <div className="flex flex-row items-center justify-center gap-3">
             <Image
-              src="/images/artsunday.png"
+              src="/neo-music-logo.jpg"
               alt="logo"
               width={64}
               height={64}

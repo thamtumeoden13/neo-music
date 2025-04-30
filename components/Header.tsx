@@ -182,7 +182,7 @@ const Header = () => {
                       )}
                     >
                       <Image
-                        src="/images/artsunday.png"
+                        src="/neo-music-logo.jpg"
                         alt="Art Sunday"
                         width={60}
                         height={30}

@@ -15,10 +15,10 @@ async function getData() {
     "roomName": room->name,
     "teacherColor": teacher->color
   }`;
-  const sessions = await client.fetch(query);
+  const classSessions = await client.fetch(query);
 
   // Chuyển đổi sang định dạng FullCalendar EventInput
-  const events: EventInput[] = sessions.map((session: any) => ({
+  const events: EventInput[] = classSessions.map((session: any) => ({
     id: session._id, // Dùng _id của Sanity làm id event
     title: session.title || "Unnamed Class",
     start: session.startDateTime, // Sanity datetime string -> FullCalendar sẽ parse
@@ -189,7 +189,7 @@ export default async function Dashboard() {
           </Button>
         </div>
         <Card className="bg-white">
-          <CardContent className="p-6 grid grid-cols-2 gap-4">
+          <CardContent className="grid grid-cols-2 gap-4 p-6">
             {dataArticles?.length &&
               dataArticles
                 .slice(0, 6)
@@ -216,7 +216,7 @@ export default async function Dashboard() {
                         </p>
                         <div className="flex items-center mt-1 ">
                           <EyeIcon className="w-3 h-3 mr-1 text-red-500" />
-                          <span className="text-sm text-gray-500 font-bold">
+                          <span className="text-sm font-bold text-gray-500">
                             {views}
                           </span>
                         </div>

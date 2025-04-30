@@ -17,7 +17,7 @@ const MusicSidebar = ({ user }: { user: User }) => {
       <div>
         <div className="logo">
           <Image
-            src="/images/artsunday.png"
+            src="/neo-music-logo.jpg"
             alt="Art Sunday"
             className="object-contain"
             width={42}

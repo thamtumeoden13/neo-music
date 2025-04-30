@@ -193,7 +193,7 @@ export default function ClassSessionsTable() {
               className="p-0 hover:bg-transparent"
             >
               <span>Trạng thái</span>
-              <ArrowUpDown className="ml-2 h-4 w-4" />
+              <ArrowUpDown className="w-4 h-4 ml-2" />
             </Button>
           </div>
         );
@@ -292,7 +292,7 @@ export default function ClassSessionsTable() {
       <section className="w-full bg-white rounded-2xl p-7">
         <div className="flex items-center justify-end px-6">
           <Button
-            className="bg-indigo-600 hover:bg-indigo-700 text-white"
+            className="text-white bg-indigo-600 hover:bg-indigo-700"
             asChild
           >
             <Link href="/admin/quan-ly-phien-hoc/new">

@@ -31,10 +31,12 @@ export interface DateTimeRange {
 interface DatePickerWithRangeProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
   onChange?: (range: DateTimeRange) => void;
+  initalValue?: DateTimeRange;
 }
 
 export function DatePickerWithRange({
   className,
+  initalValue,
   onChange,
 }: DatePickerWithRangeProps) {
   // Initialize with current date and time, and end time 2 hours later
@@ -282,6 +284,38 @@ export function DatePickerWithRange({
     // Only run once on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    if (initalValue) {
+      setDate(initalValue);
+      setFromTime({
+        hour: initalValue.from
+          ? initalValue.from.getHours().toString().padStart(2, "0")
+          : "00",
+        minute: initalValue.from
+          ? initalValue.from.getMinutes().toString().padStart(2, "0")
+          : "00",
+      });
+      setToTime({
+        hour: initalValue.to
+          ? initalValue.to.getHours().toString().padStart(2, "0")
+          : "00",
+        minute: initalValue.to
+          ? initalValue.to.getMinutes().toString().padStart(2, "0")
+          : "00",
+      });
+      setDate({
+        from: initalValue.from,
+        to: initalValue.to,
+      });
+      if (onChange) {
+        onChange({
+          from: initalValue.from,
+          to: initalValue.to,
+        });
+      }
+    }
+  }, [initalValue]);
 
   return (
     <div className={cn("grid gap-2", className)}>
