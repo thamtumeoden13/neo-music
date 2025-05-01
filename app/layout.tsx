@@ -4,8 +4,8 @@ import "easymde/dist/easymde.min.css"
 import { Toaster } from "@/components/ui/toaster";
 import { IBM_Plex_Sans } from "next/font/google";
 import { cn } from "@/lib/utils";
-import Script from "next/script";
-import GoogleAnalytics from "@/analytics/GoogleAnalytics";
+// import Script from "next/script";
+// import GoogleAnalytics from "@/analytics/GoogleAnalytics";
 
 const IBMPlex = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -18,11 +18,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="en">
       <head>
         {/* Google Analytics Script */}
-        <Script
+        {/* <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-DXR752DMTX"
           strategy="afterInteractive"
         />
@@ -33,7 +34,7 @@ export default function RootLayout({
           gtag('js', new Date());
           gtag('config', 'G-DXR752DMTX');
         `}
-        </Script>
+        </Script> */}
       </head>
       <body
         className={cn("font-IBMPlex antialiased", IBMPlex.variable)}

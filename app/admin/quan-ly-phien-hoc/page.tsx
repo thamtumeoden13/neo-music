@@ -297,7 +297,7 @@ export default function ClassSessionsTable() {
           >
             <Link href="/admin/quan-ly-phien-hoc/new">
               <span className="flex items-center">
-                <span className="mr-1">+</span> Tạo phiên học mới
+                <span className="mr-1">+</span> Tạo lớp học mới
               </span>
             </Link>
           </Button>

@@ -1,44 +1,13 @@
-import {  ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowUp, ArrowDown, LogOut } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { client } from "@/sanity/lib/client";
 import { EventInput } from "@fullcalendar/core/index.js";
 import MusicSchedulerCalendar from "@/components/admin/calendar/MusicSchedulerCalendar";
+import { signOut } from "@/auth";
+import { Button } from "@/components/ui/button";
 
-async function getData() {
-  const query = `*[_type == "classSession"]{
-    _id,
-    title,
-    startDateTime,
-    endDateTime,
-    "teacherName": teacher->name,
-    "roomName": room->name,
-    "teacherColor": teacher->color
-  }`;
-  const classSessions = await client.fetch(query);
-
-  // Chuyển đổi sang định dạng FullCalendar EventInput
-  const events: EventInput[] = classSessions.map((session: any) => ({
-    id: session._id, // Dùng _id của Sanity làm id event
-    title: session.title || "Unnamed Class",
-    start: session.startDateTime, // Sanity datetime string -> FullCalendar sẽ parse
-    end: session.endDateTime,
-    // Sử dụng extendedProps để lưu trữ dữ liệu tùy chỉnh
-    extendedProps: {
-      sanityId: session._id,
-      teacherName: session.teacherName,
-      roomName: session.roomName,
-      // ... các thông tin khác bạn muốn truy cập khi click event
-    },
-    // Tùy chỉnh màu sắc dựa trên giáo viên hoặc trạng thái
-    backgroundColor: session.teacherColor || "#3788d8", // Màu mặc định nếu GV không có màu
-    borderColor: session.teacherColor || "#3788d8",
-  }));
-  return events;
-}
 export default async function Dashboard() {
-  
-  const initialEvents = await getData();
   return (
     <div className="w-full min-h-screen bg-slate-50">
       {/* Stats Cards */}
@@ -59,7 +28,7 @@ export default async function Dashboard() {
         <Card className="bg-white">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-medium text-gray-600">Tổng số lớp học</h3>
+              <h3 className="font-medium text-gray-600">Tổng số phòng học</h3>
               <div className="flex items-center text-green-500">
                 <ArrowUp className="w-4 h-4 mr-1" />
                 <span>4</span>
@@ -72,7 +41,7 @@ export default async function Dashboard() {
         <Card className="bg-white">
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-medium text-gray-600">Tổng số phiên học</h3>
+              <h3 className="font-medium text-gray-600">Tổng số lớp học</h3>
               <div className="flex items-center text-green-500">
                 <ArrowUp className="w-4 h-4 mr-1" />
                 <span>4</span>
@@ -227,16 +196,26 @@ export default async function Dashboard() {
           </CardContent>
         </Card>
       </div> */}
-
-      {/* User Avatar */}
       <div className="fixed transform -translate-x-1/2 top-6 left-1/2 md:left-auto md:right-16 md:transform-none">
-        <Avatar className="w-12 h-12 border-2 border-white shadow-md">
-          <AvatarImage src="/placeholder.svg?height=48&width=48" alt="Adrian" />
-          <AvatarFallback>V</AvatarFallback>
-        </Avatar>
+        <form
+          action={async () => {
+            "use server";
+            await signOut({ redirectTo: "/" });
+          }}
+          className=""
+        >
+          <Button
+            type={"submit"}
+            className={"text-white gap-4 rounded-full"}
+            // disabled={isPending}
+          >
+            <span>{"Đăng Xuất"}</span>
+            <LogOut className={"size-6 text-white"} />
+          </Button>
+        </form>
       </div>
 
-      <MusicSchedulerCalendar initialEvents={initialEvents} />
+      <MusicSchedulerCalendar />
     </div>
   );
 }

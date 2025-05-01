@@ -26,8 +26,9 @@ const Layout = async ({ children }: { children: ReactNode }) => {
               alt="logo"
               width={64}
               height={64}
+              className=" rounded-14 object-contain object-center"
             />
-            <h1 className="text-2xl font-semibold text-white">Art Sunday</h1>
+            <h1 className="text-2xl font-semibold text-white">Neo Music</h1>
           </div>
 
           <div>{children}</div>

@@ -9,7 +9,7 @@ const AuthPage = async () => {
   return (
     <section className={"section_container min-h-[32rem] mt-8 w-full"}>
       <div className="flex flex-col gap-10">
-        <form
+        {/* <form
           action={async () => {
             "use server";
             await signIn("github");
@@ -23,7 +23,7 @@ const AuthPage = async () => {
             {"Đăng Nhập Bằng GitHub"}
             <IconBrandGithub className={"size-12"} />
           </Button>
-        </form>
+        </form> */}
         <form
           action={async () => {
             "use server";
@@ -32,7 +32,7 @@ const AuthPage = async () => {
         >
           <Button
             type={"submit"}
-            className={"startup-form_btn text-white gap-4 bg-secondary"}
+            className={"startup-form_btn text-white gap-4 rounded-full"}
             // disabled={isPending}
           >
             {"Đăng Nhập Bằng Google"}

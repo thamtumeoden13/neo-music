@@ -20,7 +20,7 @@ const Header = ({
         {subtitle && <p className="text-gray-500">{subtitle}</p>}
       </div>
 
-      <div className="w-full max-w-md md:w-auto hidden">
+      <div className="hidden w-full max-w-md md:w-auto">
         <SearchInput
           onSearch={onSearch}
           containerClassName="w-full md:w-[400px]"

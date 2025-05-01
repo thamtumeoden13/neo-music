@@ -14,14 +14,9 @@ import type {
 import { toast } from "@/hooks/use-toast";
 import { EventDetailsSheet } from "@/components/shared/EventDetailsSheet";
 import ViewClassModal from "@/components/shared/ViewClassModal";
+import { clientNoCache } from "@/sanity/lib/client";
 
-interface MusicSchedulerCalendarProps {
-  initialEvents: EventInput[];
-}
-
-export default function MusicSchedulerCalendar({
-  initialEvents,
-}: MusicSchedulerCalendarProps) {
+export default function MusicSchedulerCalendar() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isSheetOpen, setIsSheetOpen] = React.useState(false);
   const [selectedEvent, setSelectedEvent] =
@@ -29,6 +24,7 @@ export default function MusicSchedulerCalendar({
   const [selectedDateRange, setSelectedDateRange] =
     React.useState<DateSelectArg | null>(null);
   const [isClient, setIsClient] = useState(false);
+  const [initialEvents, setinitialEvents] = useState<EventInput[]>([]);
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     console.log("Event clicked:", clickInfo.event);
@@ -115,7 +111,41 @@ export default function MusicSchedulerCalendar({
 
   // Set isClient to true once the component mounts
   useEffect(() => {
-    setIsClient(true);
+    async function getInitialEvents() {
+      const query = `*[_type == "classSession"]{
+    _id,
+    title,
+    startDateTime,
+    endDateTime,
+    "teacherName": teacher->name,
+    "roomName": room->name,
+    "teacherColor": teacher->color
+  }`;
+      const classSessions = await clientNoCache.fetch(query);
+
+      console.log('getInitEvent->classSessions',classSessions)
+
+      // Chuyển đổi sang định dạng FullCalendar EventInput
+      const events: EventInput[] = classSessions.map((session: any) => ({
+        id: session._id, // Dùng _id của Sanity làm id event
+        title: session.title || "Unnamed Class",
+        start: session.startDateTime, // Sanity datetime string -> FullCalendar sẽ parse
+        end: session.endDateTime,
+        // Sử dụng extendedProps để lưu trữ dữ liệu tùy chỉnh
+        extendedProps: {
+          sanityId: session._id,
+          teacherName: session.teacherName,
+          roomName: session.roomName,
+          // ... các thông tin khác bạn muốn truy cập khi click event
+        },
+        // Tùy chỉnh màu sắc dựa trên giáo viên hoặc trạng thái
+        backgroundColor: session.teacherColor || "#3788d8", // Màu mặc định nếu GV không có màu
+        borderColor: session.teacherColor || "#3788d8",
+      }));
+      setinitialEvents(events);
+      setIsClient(true);
+    }
+    getInitialEvents();
   }, []);
 
   // Only render the calendar on the client side

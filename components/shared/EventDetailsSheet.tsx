@@ -46,6 +46,8 @@ export function EventDetailsSheet({
         id,
       });
 
+      console.log('getClassSession -> res',res)
+
       setClassSession(res);
     };
 

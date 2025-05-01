@@ -13,10 +13,10 @@ export default function Layout({children}: Readonly<{
     <main className={"font-ibm-plex"}>
       {/*<Navbar/>*/}
       {/* <NavbarMenu /> */}
-      <Header />
+      {/* <Header /> */}
       {children}
-      <ContactButton />
-      <Footer />
+      {/* <ContactButton /> */}
+      {/* <Footer /> */}
     </main>
   )
 }

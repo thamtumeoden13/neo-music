@@ -7,10 +7,13 @@ import MarkupSchema from "@/components/shared/MarkupSchema";
 import { AppleCardsCarousel } from "@/components/AppleCardsCarousel";
 import { SimpleCardType } from "@/components/SimpleCard";
 import ProjectDetailList from "@/components/ProjectDetailList";
+import { redirect } from "next/navigation";
 
 export default async function Home({ searchParams }: {
   readonly searchParams: Promise<{ query?: string }>
 }) {
+
+  return redirect("/admin")
 
   const query = (await searchParams).query;
 

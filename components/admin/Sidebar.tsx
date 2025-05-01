@@ -19,7 +19,7 @@ const MusicSidebar = ({ user }: { user: User }) => {
           <Image
             src="/neo-music-logo.jpg"
             alt="Art Sunday"
-            className="object-contain"
+            className="object-contain object-center rounded-14"
             width={42}
             height={42}
           />
