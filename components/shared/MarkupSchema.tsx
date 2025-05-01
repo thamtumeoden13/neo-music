@@ -4,7 +4,7 @@ export default function MarkupSchema({ path, post, }: { path: string, post?: any
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "Article",
-    "headline": post?.title || "Kiến Trúc, Xây Dựng Bình Dương | ART SUNDAY",
+    "headline": post?.title || "Đào Tạo, Âm Nhạc Bình Dương | NEO MUSIC",
     "image": [
       post?.image || "https://images.pexels.com/photos/3797991/pexels-photo-3797991.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
       post?.thumbnail || "https://images.pexels.com/photos/3797991/pexels-photo-3797991.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -15,7 +15,7 @@ export default function MarkupSchema({ path, post, }: { path: string, post?: any
     },
     "publisher": {
       "@type": "Organization",
-      "name": "CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG ART SUNDAY",
+      "name": "NEO Music - Gia Hòa - Q9",
       "logo": {
         "@type": "ImageObject",
         "url": post?.thumbnail || "https://images.pexels.com/photos/3797991/pexels-photo-3797991.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -25,16 +25,16 @@ export default function MarkupSchema({ path, post, }: { path: string, post?: any
     "dateModified": "2024-12-08",
     "mainEntityOfPage": {
       "@type": "WebPage",
-      "@id": `https://artsunday.vn/${path}`
+      "@id": `https://neo-music.vercel.app/${path}`
     },
-    "articleBody": post?.subtitle || "Kiến Trúc, Xây Dựng Bình Dương | ART SUNDAY",
-    "description": post?.description || "Thiết Kế Và Thi Công Kiến Trúc: Nhà Phố, Biệt Thự, Khách Sạn, Nhà Thờ, Nhà Giáo Lý Và Nội Thất Chuyên Nghiệp"
+    "articleBody": post?.subtitle || "Đào Tạo, Âm Nhạc Bình Dương | NEO MUSIC",
+    "description": post?.description || "NEO MUSIC 🚩 Trường kiểu mẫu về đào tạo nền, ✅ Cam kết ra bài sau 3 buổi học, ✅ Lớp học riêng biệt cho các bộ môn, ✅ Người lớn có không gian riêng, ✅ Học thử & tập đàn miễn phí"
   }
 
   return (
     <Head>
-      <title>{post?.title || "Kiến Trúc, Xây Dựng Bình Dương | ART SUNDAY"}</title>
-      <meta name="description" content={post?.description || "Thiết Kế Và Thi Công Kiến Trúc: Nhà Phố, Biệt Thự, Khách Sạn, Nhà Thờ, Nhà Giáo Lý Và Nội Thất Chuyên Nghiệp."} />
+      <title>{post?.title || "Đào Tạo, Âm Nhạc Bình Dương | NEO MUSIC"}</title>
+      <meta name="description" content={post?.description || "NEO MUSIC 🚩 Trường kiểu mẫu về đào tạo nền, ✅ Cam kết ra bài sau 3 buổi học, ✅ Lớp học riêng biệt cho các bộ môn, ✅ Người lớn có không gian riêng, ✅ Học thử & tập đàn miễn phí."} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}

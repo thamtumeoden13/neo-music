@@ -38,7 +38,7 @@ export default async function Designs({ params }: { readonly params: Promise<{ r
       <section className={"section_container !px-0 !py-2"}>
         <CloudinaryImage
           src={data.thumbnail}
-          alt={data.subtitle || "Art Sunday"}
+          alt={data.subtitle || "Neo Music"}
           width={760}
           height={540}
           className="object-cover w-full rounded-lg md:mb-10"
@@ -75,12 +75,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!data) return null;
 
   return {
-    title: `${data.title} - Art Sunday`,
+    title: `${data.title} - Neo Music`,
     description: `${data?.description}`,
     openGraph: {
-      title: `${data.title} - Art Sunday`,
+      title: `${data.title} - Neo Music`,
       description: `${data?.description}`,
-      url: `http://artsunday.vn/thiet-ke/${slug}`,
+      url: `http://neo-music.vercel.app/thiet-ke/${slug}`,
       images: [
         {
           url: data.image,
@@ -92,7 +92,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${data?.name} - Art Sunday`,
+      title: `${data?.name} - Neo Music`,
       description: `${data?.description}`,
       images: [data?.image],
     },

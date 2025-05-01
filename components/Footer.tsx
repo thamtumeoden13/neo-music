@@ -56,7 +56,7 @@ const Footer = () => {
           <div className="flex flex-col">
             <Image
               src={"/bg-artsunday.png"}
-              alt='Art Sunday'
+              alt='Neo Music'
               width={500}
               height={500}
               className='object-contain w-[360px] h-[100px]'
@@ -108,7 +108,7 @@ const Footer = () => {
           >
             <ContactModal />
             <p className="font-normal text-[14px] text-white opacity-50">
-              Copyright © 2023 - 2025 Art Sunday. All rights reserved.
+              Copyright © 2023 - 2025 Neo Music. All rights reserved.
             </p>
             <div className="flex gap-4 ">
               {socials.map((social, index) => (

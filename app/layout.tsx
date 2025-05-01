@@ -48,13 +48,13 @@ export default function RootLayout({
 }
 
 export const metadata: Metadata = {
-  title: "CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG ART SUNDAY",
-  description: "Thiết Kế Và Thi Công Kiến Trúc: Nhà Phố, Biệt Thự, Khách Sạn, Nhà Thờ, Nhà Giáo Lý Và Nội Thất Chuyên Nghiệp",
-  keywords: ["Biệt Thự", "Nhà Phố", "Nội Thất", "Công Trình Công Giáo"],
+  title: "NEO Music - Gia Hòa - Q9",
+  description: "NEO MUSIC 🚩 Trường kiểu mẫu về đào tạo nền, ✅ Cam kết ra bài sau 3 buổi học, ✅ Lớp học riêng biệt cho các bộ môn, ✅ Người lớn có không gian riêng, ✅ Học thử & tập đàn miễn phí",
+  keywords: ["Đào Tạo", "Dạy Nhạc", "Nhạc Cụ"],
   openGraph: {
-    title: "Kiến Trúc, Xây Dựng | ART SUNDAY",
-    description: "Thiết Kế Và Thi Công Kiến Trúc: Nhà Phố, Biệt Thự, Khách Sạn, Nhà Thờ, Nhà Giáo Lý Và Nội Thất Chuyên Nghiệp.",
-    url: "https://artsunday.vn/",
+    title: "Đào Tạo, Âm Nhạc | NEO MUSIC",
+    description: "NEO MUSIC 🚩 Trường kiểu mẫu về đào tạo nền, ✅ Cam kết ra bài sau 3 buổi học, ✅ Lớp học riêng biệt cho các bộ môn, ✅ Người lớn có không gian riêng, ✅ Học thử & tập đàn miễn phí.",
+    url: "https://neo-music.vercel.app/",
     images: [
       {
         url: "https://images.pexels.com/photos/3797991/pexels-photo-3797991.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -65,8 +65,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     site: "@twitterhandle",
-    title: "Kiến Trúc, Xây Dựng | ART SUNDAY",
-    description: "Thiết Kế Và Thi Công Kiến Trúc: Nhà Phố, Biệt Thự, Khách Sạn, Nhà Thờ, Nhà Giáo Lý Và Nội Thất Chuyên Nghiệp.",
+    title: "Đào Tạo, Âm Nhạc | NEO MUSIC",
+    description: "NEO MUSIC 🚩 Trường kiểu mẫu về đào tạo nền, ✅ Cam kết ra bài sau 3 buổi học, ✅ Lớp học riêng biệt cho các bộ môn, ✅ Người lớn có không gian riêng, ✅ Học thử & tập đàn miễn phí.",
     images: [
       {
         url: "https://images.pexels.com/photos/3797991/pexels-photo-3797991.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",

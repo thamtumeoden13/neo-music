@@ -5,7 +5,7 @@ Disallow: /auth/
 Disallow: /_next/static/media/
 
 # Host
-Host: https://artsunday.vn/
+Host: https://neo-music.vercel.app/
 
 # Sitemaps
-Sitemap: https://artsunday.vn/sitemap.xml
+Sitemap: https://neo-music.vercel.app/sitemap.xml
